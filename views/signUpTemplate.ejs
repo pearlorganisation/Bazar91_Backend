@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verification</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      p {
+        color: #555;
+        line-height: 2;
+      }
+
+      .verify-button {
+        display: inline-block;
+        line-height: 16px;
+        color: #ffffff !important;
+        font-weight: 400;
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+        padding: 10px 24px;
+        background-color: #4184f3;
+        border-radius: 5px;
+        min-width: 90px;
+      }
+
+      .verify-button:hover {
+        background-color: #0060fa;
+      }
+
+      .note {
+        font-weight: bold;
+        color: #ff0000;
+        /* Red color for emphasis */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Credentials for Bazar91</h1>
+      <p>Email : <%=details.email%></p>
+      <!-- <p>Password : <%=details.password%></p> -->
+       <a href="<%=details.BACKEND_URL%>/api/v1/auth/verifyToken/<%=details.token%>"> Click Here To Verify Account </a>
+      <p>Thank you for choosing us!</p>
+      <p class="note">Note: <%=details.message%></p>
+    </div>
+  </body>
+</html>
