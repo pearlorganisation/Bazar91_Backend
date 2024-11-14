@@ -1,11 +1,11 @@
 import chalk, { Chalk } from "chalk";
-import { asyncHandler } from "../../util/asynchandler.js";
 import errorResponse from "../../util/errorResponse.js";
 import { sendMail } from "../../util/MailTempates/signUpMail.js";
 import { AuthModel } from "../Models/auth.js"
 import jwt from "jsonwebtoken";
 import { UserMetaDataModel } from "../Models/userMetaData.js";
 import mongoose from "mongoose";
+import { asyncHandler } from "../../util/asynchandler.js";
 
 export const signUp = asyncHandler(async(req,res,next)=>{
   
