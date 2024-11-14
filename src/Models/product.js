@@ -1,5 +1,5 @@
 
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 
 const productSchema = new mongoose.Schema({
@@ -16,6 +16,10 @@ const productSchema = new mongoose.Schema({
         max:[10000000000,"Max Length For Price is 10000000000"],
         required:true
 
+    },
+    brand:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Brand"
     },
     productDescription:{
         type:String
@@ -41,7 +45,16 @@ const productSchema = new mongoose.Schema({
     videoMetaData:{
         type:{}
     },
-    optionalTags:[{}],
+    productDetails:{
+        type:String
+    },
+    optionalTags:[{
+        tagName:{
+            type:String
+        }
+    }],
+    attachments:[{}],
+
     discount:{
         type:Number,
         min:0,

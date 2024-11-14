@@ -6,34 +6,36 @@ import chalk from "chalk";
 
 // Controller for creating a new product
 export const createProduct = asyncHandler(async (req, res) => {
-    let { productImages, productBanner, videoMetaData } = req.files;
-    const { productTitle, price, productDescription, quantity, wishListed, optionalTags, discount } = req.body;
+    // let { productImages, productBanner, videoMetaData } = req.files;
+    const { productTitle, price,brand, productDescription,productDetails, quantity,  optionalTags, discount } = req.body;
   
-    // Handle file uploads for all fields in req.files
-    // if(productImages)
-    productImages = await uploadFileToCloudinary(productImages);
-    // productBanner = await uploadFileToCloudinary(productBanner);
-    // videoMetaData = await uploadFileToCloudinary(videoMetaData);
 
-    // const updatedFiles = {};
-    // const fileUploadPromises = Object.keys(req.files).map(async (element) => {
-    //     // Upload each file and replace the file with its Cloudinary result
-    //     updatedFiles[element] = await uploadFileToCloudinary([element]);
-    // });
 
+    const updatedFiles = {};
+    const fileUploadPromises = Object.keys(req.files).map(async (element) => {
+        // Upload each file and replace the file with its Cloudinary result
+        updatedFiles[element] = await uploadFileToCloudinary(req.files[element]);
+       
+    });
+    
     // Wait for all file uploads to complete before creating the product
-    // await Promise.all(fileUploadPromises);
+    // req.files = updatedFiles;
+    await Promise.all(fileUploadPromises);
+    let { productImages, productBanner, videoMetaData ,attachments } = updatedFiles;
 
     // Create a new product
     const newProduct = await ProductModel.create({
         productTitle,
+        brand,
         price,
+        productDetails,
         productDescription,
-        productImages,
-        productBanner,
+        productImages:productImages||[],
+        productBanner:productBanner[0]||'',
         quantity,
-        // videoMetaData,
-        // optionalTags,
+        videoMetaData:videoMetaData||[],
+        optionalTags:optionalTags||[],
+        attachments:attachments||[],
         discount
     });
 

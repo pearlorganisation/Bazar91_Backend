@@ -1,31 +1,49 @@
 import chalk from "chalk";
 import { v2 as cloudinary } from "cloudinary";
+import { configDotenv } from "dotenv";
 
+configDotenv();
 // Configure Cloudinary using environment variables
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
+  
 });
+
 
 // Function to handle single or multiple file uploads
 export const uploadFileToCloudinary = async (files) => {
-  console.log(chalk.blue(JSON.stringify(files, null, 2)));
 
   try {
     // Ensure files is always an array for uniform processing
     const fileArray = Array.isArray(files) ? files : [files];
-
+    
     // Map each file to the upload function
-    const uploadPromises = fileArray.map((file) =>
-      cloudinary.uploader.upload(file.path, {
+    const uploadPromises = fileArray.map((file) =>{
+
+      let resourceType = "raw"; // Default to "raw" for non-image, non-video files
+
+      // Determine the resource type based on file extension
+      if (file?.path.match(/\.(jpg|jpeg|png|gif|webp|jfif)$/i)) {
+        resourceType = "image";
+      } else if (file?.path.match(/\.(mp4|mov|avi|mkv)$/i)) {
+        resourceType = "video";
+      } else if (file?.path.match(/\.(pdf|odf|docx)$/i)) {
+        console.log(chalk.magentaBright("Shashank"))
+        resourceType = "raw";
+      }
+      
+      console.log(chalk.magenta("hi there"))
+      return cloudinary.uploader.upload(file.path,{
         folder: "Bazar91", // Specify the folder where the file will be stored
-      })
+        resource_type: resourceType
+      })}
     );
 
     // Wait for all promises (uploads) to complete
     const uploadResults = await Promise.all(uploadPromises);
-
     // Map and return only the necessary details from the upload results
     return uploadResults.map((result) => ({
       // [{}]-> for one file, [{},{}]=> for multiple file

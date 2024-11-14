@@ -35,3 +35,5 @@ const reviewSchema = new mongoose.Schema({
 reviewSchema.index({productId:1,reviewBy:1},{unique:true});
 
 export const ReviewModel = new mongoose.model("Review",reviewSchema);
+
+
