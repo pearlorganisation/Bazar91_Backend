@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../util/asynchandler.js";
+import { asyncHandler } from "../../util/asyncHandlerr.js";
 import { uploadFileToCloudinary } from "../../util/cloudinary/cloudinary.js";
 import { ProductModel } from "../Models/product.js";
 import chalk from "chalk";
