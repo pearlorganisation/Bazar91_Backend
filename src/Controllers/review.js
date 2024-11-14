@@ -1,5 +1,6 @@
 import { asyncHandler } from "../../util/asynchandler.js";
 import errorResponse from "../../util/errorResponse.js";
+import { ReviewMetaDataModal } from "../Models/reviewMetaData.js";
 import { ReviewModel } from "../Models/reviews.js";
 
 
@@ -11,6 +12,7 @@ export const createReview = asyncHandler(async (req, res, next) => {
   if (!productId || !reviewBy || !reviewHeadline || !reviewDescription || reviewStarCount === undefined) {
     return next(new errorResponse("All fields are required", 400));
   }
+   
 
   // Check if the user has already reviewed this product
   const existingReview = await ReviewModel.findOne({ productId, reviewBy });
@@ -18,7 +20,11 @@ export const createReview = asyncHandler(async (req, res, next) => {
     return next(new errorResponse("You have already reviewed this product", 400));
   }
 
-  try {
+  
+
+    const newReviewMetaData = new ReviewMetaDataModal.create({
+      
+    })
     const newReview = new ReviewModel({
       productId,
       reviewBy,
@@ -34,9 +40,7 @@ export const createReview = asyncHandler(async (req, res, next) => {
       message: "Review created successfully",
       review: newReview
     });
-  } catch (error) {
-    next(new errorResponse("Error creating review", 500));
-  }
+
 });
 
 // Fetch all reviews for a specific product
