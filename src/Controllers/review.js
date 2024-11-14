@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../util/asyncHandlerr.js";
+import { asyncHandler } from "../../util/asyncHandler.js";
 import errorResponse from "../../util/errorResponse.js";
 import { ReviewMetaDataModal } from "../Models/reviewMetaData.js";
 import { ReviewModel } from "../Models/reviews.js";

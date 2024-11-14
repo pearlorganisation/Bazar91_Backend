@@ -1,4 +1,4 @@
-import { asyncHandler } from "../../util/asyncHandlerr.js";
+import { asyncHandler } from "../../util/asyncHandler.js";
 import { BrandModel } from "../Models/brand.js";
 
 // Controller for creating a brand
