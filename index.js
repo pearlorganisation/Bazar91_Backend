@@ -33,6 +33,16 @@ app.use(
         }
       : {
           origin: [
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "http://localhost:5175",
+            "*"],
+        credentials:true,
+        methods:["GET","PUT","POST","PATCH","DELETE","HEADER"],
+        allowedHeaders:["Content-Type","Authorization","x-csrf-token"],
+        exposedHeaders:["*","Authorization"]
+    }:{
+        origin:[
             "http://localhost:7001",
             "http://localhost:7002",
             "http://localhost:5173",

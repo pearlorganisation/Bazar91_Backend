@@ -1,5 +1,5 @@
 import express from "express";
-import {  refreshToken, signIn, signUp, verifyToken } from "../Controllers/auth.js";
+import {  logout, refreshToken, signIn, signUp, verifyToken } from "../Controllers/auth.js";
 
 const router = express.Router();
 
@@ -13,6 +13,9 @@ router.route("/verifyToken/:token")
 
 router.route("/refreshToken")
 .head(refreshToken);
+
+router.route("/logout")
+.get(logout);
 
 
 export const authRoutes = router;
