@@ -42,19 +42,7 @@ app.use(
         methods:["GET","PUT","POST","PATCH","DELETE","HEAD"],
         allowedHeaders:["Content-Type","Authorization","x-csrf-token"],
         exposedHeaders:["*","Authorization"]
-    }:{
-        origin:[
-            "http://localhost:7001",
-            "http://localhost:7002",
-            "http://localhost:5173",
-            "http://localhost:5174",
-            "http://localhost:5175",
-          ],
-          methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-          allowedHeaders: ["Authorization", "Content-Type", "x-csrf-token"],
-          exposedHeaders: ["*", "Authorization"],
-        }
-  )
+    }
 );
 
 app.use(cookieParser());
