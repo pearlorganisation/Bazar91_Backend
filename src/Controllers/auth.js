@@ -119,12 +119,11 @@ export const signIn = asyncHandler(async (req,res,next)=>{
   }
 );
 
-
+isEmailExists.refreshToken = undefined;
 res.status(200).json({
   success: true,
   message: "Login successful",
-  accessToken,
-  refreshToken
+  data:isEmailExists
 });
 
 
@@ -188,4 +187,47 @@ export const refreshToken = asyncHandler(async (req,res,next)=>{
   
 
 
+});
+
+export const logout = asyncHandler(async (req, res, next) => {
+  const { REFRESH_TOKEN_BAZAR91: refreshToken } = req.cookies;
+
+  // Check if a refresh token is provided
+  if (!refreshToken) {
+    return next(new errorResponse("No refresh token provided", 401));
+  }
+
+  // Verify and decode the refresh token
+  let decodedData;
+  try {
+    decodedData = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    return next(new errorResponse("Invalid refresh token", 401));
+  }
+
+  // Find the user associated with the token
+  const user = await AuthModel.findOne({ email: decodedData.email });
+  if (!user) {
+    return next(new errorResponse("User not found", 404));
+  }
+
+  // Clear the refresh token in the database to prevent reuse
+  user.refreshToken = null;
+  await user.save({ validateBeforeSave: false });
+
+  // Clear the access and refresh token cookies
+  res.clearCookie("ACCESS_TOKEN_BAZAR91", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.clearCookie("REFRESH_TOKEN_BAZAR91", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  // Send success response
+  res.status(200).json({
+    success: true,
+    message: "Logout successful !!",
+  });
 });
