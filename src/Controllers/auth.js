@@ -222,10 +222,12 @@ export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie("ACCESS_TOKEN_BAZAR91", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: 'None',
   });
   res.clearCookie("REFRESH_TOKEN_BAZAR91", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: 'None',
   });
 
   // Send success response
