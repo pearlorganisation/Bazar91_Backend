@@ -1,3 +1,4 @@
+import { VirtualType } from "mongoose";
 import { asyncHandler } from "../../util/asyncHandler.js";
 import { uploadFileToCloudinary } from "../../util/cloudinary/cloudinary.js";
 import { ProductModel } from "../Models/product.js";
@@ -48,7 +49,8 @@ export const createProduct = asyncHandler(async (req, res) => {
 
 // Controller for getting all products
 export const getAllProducts = asyncHandler(async (req, res) => {
-    const products = await ProductModel.find();
+    const products = await ProductModel.find().populate('brand',"title").select('brand productTitle banner productBanner createdAt').lean();
+    
 
     res.status(200).json({
         success: true,
@@ -58,7 +60,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
 
 // Controller for getting a single product by ID
 export const getProductById = asyncHandler(async (req, res) => {
-    const product = await ProductModel.findById(req.params.id);
+    const product = await ProductModel.findById(req.params.id).lean();
 
     if (!product) {
         return res.status(404).json({

@@ -44,44 +44,44 @@ export const signUp = asyncHandler(async(req,res,next)=>{
 export const verifyToken = asyncHandler(async (req, res, next) => {
   const { token } = req.params;
 
-  // Verify the JWT token
+  // Decode JWT
   let decodedData;
   try {
     decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log(chalk.greenBright("Decoded Data:", JSON.stringify(decodedData)));
   } catch (error) {
-    return next(new errorResponse("Failed to verify the token", 401)); // Return error if token is invalid or expired
+    return next(new errorResponse("Invalid or expired token. Please sign up again!", 401));
   }
 
-  // Start a session for transaction
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
-    // Create the user in AuthModel (replace with your logic)
-    const user = await AuthModel.create([{ ...decodedData }], { session });
+    session.startTransaction();
 
-    // Create the associated metadata in UserMetaDataModel (replace with your logic)
-    await UserMetaDataModel.create([{ authId: user[0]?._id }], { session }); // Access the first user in the array
+    const { email, firstName, lastName, password, confirmPassword, gender } = decodedData;
 
-    // Commit the transaction if everything is successful
+    // Create user
+    const newUser = await AuthModel.create([{ email, firstName, lastName, password, confirmPassword, gender }], { session });
+
+    // Create associated metadata
+    await UserMetaDataModel.create([{ authId: newUser[0]?._id }], { session });
+
     await session.commitTransaction();
+    session.endSession();
 
-    // Respond with success message
-    res.status(200).json({
+    return res.status(200).json({
       status: true,
-      message: "Email Verified Successfully !!",
+      message: "Email Verified Successfully!",
     });
   } catch (err) {
-    // Rollback transaction if there's an error
     await session.abortTransaction();
-    
-    // Pass the error to the error handler with a proper message
-    return next(new errorResponse("Something went wrong. Please try signing up again!", 500));
-  } finally {
-    // End the session after transaction is done
     session.endSession();
+
+    console.error("Transaction Error:", err);
+    return next(new errorResponse("Something went wrong. Please try signing up again!", 500));
   }
 });
+
 
 export const signIn = asyncHandler(async (req,res,next)=>{
   

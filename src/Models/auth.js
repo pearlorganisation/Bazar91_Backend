@@ -23,7 +23,8 @@ const authSchema = new mongoose.Schema({
         select: false,
     },
     profileImage:{
-        type:String
+        type:String,
+        default:''
     },
     role:{
         type:String,
