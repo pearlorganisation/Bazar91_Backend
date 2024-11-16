@@ -110,7 +110,7 @@ export const signIn = asyncHandler(async (req,res,next)=>{
   httpOnly :true,
   secure:process.env.NODE_ENV === "production",
   maxAge:process.env.ACCESS_TOKEN_MAX_AGE||"15m",
-  sameSite: 'None',
+  sameSite: process.env.NODE_ENV === "production" ?'None':'Lax',
   }
 );
 
@@ -118,7 +118,7 @@ export const signIn = asyncHandler(async (req,res,next)=>{
   httpOnly :true,
   secure:process.env.NODE_ENV === "production",
   maxAge:process.env.REFRESH_TOKEN_MAX_AGE||"15d",
-  sameSite: 'None',
+  sameSite: process.env.NODE_ENV === "production" ?'None':'Lax',
   }
 );
 
@@ -222,12 +222,12 @@ export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie("ACCESS_TOKEN_BAZAR91", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: 'None',
+    sameSite: process.env.NODE_ENV === "production" ?'None':'Lax',
   });
   res.clearCookie("REFRESH_TOKEN_BAZAR91", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: 'None',
+    sameSite: process.env.NODE_ENV === "production" ?'None':'Lax',
   });
 
   // Send success response
