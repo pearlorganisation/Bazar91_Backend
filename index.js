@@ -42,7 +42,7 @@ app.use(
         methods:["GET","PUT","POST","PATCH","DELETE","HEAD"],
         allowedHeaders:["Content-Type","Authorization","x-csrf-token"],
         exposedHeaders:["Authorization"]
-    }
+    })
 );
 
 app.use(cookieParser());
