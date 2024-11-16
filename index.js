@@ -25,7 +25,7 @@ app.use(
             "http://localhost:5173",
             "http://localhost:5174",
             "http://localhost:5175",
-            "https://bazar91-frontend.vercel.app/"
+            "https://bazar91-frontend.vercel.app"
           ],
           credentials: true,
           methods: ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD"],
@@ -36,8 +36,8 @@ app.use(
           origin: [
             "http://localhost:5173",
             "http://localhost:5174",
-            "http://localhost:5175","https://bazar91-frontend.vercel.app/"
-            "*"],
+            "http://localhost:5175","https://bazar91-frontend.vercel.app"
+          ],
         credentials:true,
         methods:["GET","PUT","POST","PATCH","DELETE","HEAD"],
         allowedHeaders:["Content-Type","Authorization","x-csrf-token"],
