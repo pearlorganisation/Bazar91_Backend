@@ -38,7 +38,7 @@ export const uploadFileToCloudinary = async (files) => {
       console.log(chalk.magenta("hi there"))
       return cloudinary.uploader.upload(file.path,{
         folder: "Bazar91", // Specify the folder where the file will be stored
-        resource_type: "auto"
+        resource_type: resourceType
       })}
     );
 
