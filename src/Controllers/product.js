@@ -3,6 +3,7 @@ import { asyncHandler } from "../../util/asyncHandler.js";
 import { uploadFileToCloudinary } from "../../util/cloudinary/cloudinary.js";
 import { ProductModel } from "../Models/product.js";
 import chalk from "chalk";
+import { populate } from "dotenv";
 
 
 // Controller for creating a new product
@@ -49,7 +50,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 
 // Controller for getting all products
 export const getAllProducts = asyncHandler(async (req, res) => {
-    const products = await ProductModel.find().populate('brand',"title").select('brand productTitle banner productBanner createdAt').lean();
+    const products = await ProductModel.find().populate('brand',"title").select('brand productTitle banner productBanner createdAt ').lean();
     
 
     res.status(200).json({
@@ -60,7 +61,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
 
 // Controller for getting a single product by ID
 export const getProductById = asyncHandler(async (req, res) => {
-    const product = await ProductModel.findById(req.params.id).lean();
+    const product = await ProductModel.findById(req.params.id).populate('brand');
 
     if (!product) {
         return res.status(404).json({
