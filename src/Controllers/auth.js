@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { UserMetaDataModel } from "../Models/userMetaData.js";
 import mongoose from "mongoose";
 import { asyncHandler } from "../../util/asyncHandler.js";
+import { configDotenv } from "dotenv";
 
 export const signUp = asyncHandler(async(req,res,next)=>{
   
