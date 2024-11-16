@@ -109,14 +109,16 @@ export const signIn = asyncHandler(async (req,res,next)=>{
   res.cookie('ACCESS_TOKEN_BAZAR91',accessToken,{
   httpOnly :true,
   secure:process.env.NODE_ENV === "production",
-  maxAge:process.env.ACCESS_TOKEN_MAX_AGE||"15m"
+  maxAge:process.env.ACCESS_TOKEN_MAX_AGE||"15m",
+  sameSite: 'None',
   }
 );
 
   res.cookie('REFRESH_TOKEN_BAZAR91',refreshToken,{
   httpOnly :true,
   secure:process.env.NODE_ENV === "production",
-  maxAge:process.env.REFRESH_TOKEN_MAX_AGE||"15d"
+  maxAge:process.env.REFRESH_TOKEN_MAX_AGE||"15d",
+  sameSite: 'None',
   }
 );
 
