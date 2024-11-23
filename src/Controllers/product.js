@@ -55,10 +55,8 @@ export const createProduct = asyncHandler(async (req, res) => {
 
 // Controller for getting all products
 export const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await ProductModel.find()
-    .populate("brand", "title")
-    .select("brand productTitle banner productBanner createdAt price discount")
-    .lean();
+    const products = await ProductModel.find().select('brand productTitle banner productBanner price createdAt discountedPrice discount').populate('brand',"title");
+    
 
   res.status(200).json({
     success: true,
