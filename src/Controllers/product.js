@@ -112,3 +112,15 @@ export const deleteProduct = asyncHandler(async (req, res) => {
         message: "Product deleted successfully"
     });
 });
+
+export const getProductByBrand = asyncHandler(async (req,res,next)=>{
+    const {brandId} = req.params;
+    const products = await ProductModel.find({brand:brandId});
+
+    if(!products)
+    {
+        return res.status(400).json({status:false,message:"Product Not Found Bad Request !!"});
+    }
+
+    res.status(200).json({status:true,message:"Products Fetched Successfully !!",data:products});
+})

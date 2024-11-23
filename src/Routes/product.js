@@ -1,5 +1,5 @@
 import express from "express";
-import { createProduct,deleteProduct,getAllProducts, getProductById} from "../Controllers/product.js";
+import { createProduct,deleteProduct,getAllProducts, getProductByBrand, getProductById} from "../Controllers/product.js";
 import { upload } from "../Middlewares/multerConfig.js";
 
 const router = express.Router();
@@ -18,6 +18,9 @@ router.route("")
 router.route("/:id")
 .get(getProductById)
 .delete(deleteProduct);
+
+router.route("/brand/:brandId")
+.get(getProductByBrand);
 
 
 
